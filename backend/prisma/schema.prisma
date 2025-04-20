@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model PromptLog {
+  id          Int      @id @default(autoincrement())
+  prompt      String
+  response    String   @db.Text
+  model       String   @default("gpt-4") // Track which LLM was used
+  regenerated Boolean  @default(false)
+  userId      String? // Optional: Track user (if auth added later)
+  latencyMs   Int? // Optional: Duration to get response
+  createdAt   DateTime @default(now())
+}

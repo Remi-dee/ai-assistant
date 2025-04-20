@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE `PromptLog` ADD COLUMN `latencyMs` INTEGER NULL,
+    ADD COLUMN `model` VARCHAR(191) NOT NULL DEFAULT 'gpt-4',
+    ADD COLUMN `regenerated` BOOLEAN NOT NULL DEFAULT false,
+    ADD COLUMN `userId` VARCHAR(191) NULL;
