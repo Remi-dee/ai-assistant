@@ -13,9 +13,9 @@ import { AiOutlineBarChart } from "react-icons/ai";
 
 export default function MetricsPage() {
   const [data, setData] = useState(null);
-
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   useEffect(() => {
-    fetch("http://localhost:5000/openai/metrics")
+    fetch(`${backendUrl}/openai/history/metrics`)
       .then((res) => res.json())
       .then(setData);
   }, []);

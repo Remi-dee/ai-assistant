@@ -11,6 +11,7 @@ export default function ChatHistoryPage() {
   const [submitting, setSubmitting] = useState(false);
   const [regenerating, setRegenerating] = useState({});
   const router = useRouter();
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   useEffect(() => {
     loadHistory();
@@ -19,7 +20,7 @@ export default function ChatHistoryPage() {
   async function loadHistory() {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/openai/history");
+      const res = await fetch(`${backendUrl}/openai/history`);
       const data = await res.json();
       setHistory(data);
     } catch (err) {
@@ -36,7 +37,7 @@ export default function ChatHistoryPage() {
 
     setSubmitting(true);
     try {
-      const res = await fetch("http://localhost:5000/openai/generate", {
+      const res = await fetch(`${backendUrl}/openai/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: newPrompt }),
@@ -59,7 +60,7 @@ export default function ChatHistoryPage() {
   async function regenerateResponse(prompt, index) {
     setRegenerating((prev) => ({ ...prev, [index]: true }));
     try {
-      const res = await fetch("http://localhost:5000/openai/generate", {
+      const res = await fetch(`${backendUrl}/openai/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
